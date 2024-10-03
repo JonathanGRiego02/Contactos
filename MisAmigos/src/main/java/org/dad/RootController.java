@@ -1,5 +1,12 @@
 package org.dad;
 
+import javafx.beans.Observable;
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
@@ -14,15 +22,36 @@ import java.util.ResourceBundle;
 
 public class RootController implements Initializable {
 
+    // Controllers
+    private final FriendController friendController = new FriendController();
+
+    // Model
+
+    private final ListProperty<Friend> friends = new SimpleListProperty<>(FXCollections.observableArrayList());
+    private final ObjectProperty<Friend> selectedFriend = new SimpleObjectProperty<>();
+
+
+    // View
     @FXML
     private BorderPane root = new BorderPane();
 
+    @FXML
+    private VBox emptyBox;
+
+    @FXML
+    private ListView<Friend> friendsListView;
+
+    @FXML
+    private Button enemyButton;
+
+    @FXML
+    private Button friendButton;
     public BorderPane getRoot() {
         return root;
     }
 
-    public ListView<?> getAmigosListView() {
-        return amigosListView;
+    public ListView<Friend> getFriendsListView() {
+        return friendsListView;
     }
 
     public Button getEnemyButton() {
@@ -33,15 +62,10 @@ public class RootController implements Initializable {
         return friendButton;
     }
 
+    public VBox getEmptyBox() {
+        return emptyBox;
+    }
 
-    @FXML
-    private ListView<?> amigosListView;
-
-    @FXML
-    private Button enemyButton;
-
-    @FXML
-    private Button friendButton;
 
 
     public RootController() {
@@ -56,17 +80,32 @@ public class RootController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // Bindings
+        friendsListView.itemsProperty().bind(friends);
+        selectedFriend.bind(friendsListView.getSelectionModel().selectedItemProperty());
+        enemyButton.disableProperty().bind(selectedFriend.isNull());
+        selectedFriend.addListener(this::onSelectFriendChange);
+    }
 
+    private void onSelectFriendChange(ObservableValue<? extends Friend> o, Friend ov, Friend nv) {
+        if (nv == null) {
+            root.setCenter(emptyBox);
+        } else {
+            root.setCenter(friendController.getRoot());
+        }
     }
 
     @FXML
     void onenemyAction(ActionEvent event) {
-
+        friends.remove(selectedFriend.get());
     }
 
     @FXML
     void onfriendAction(ActionEvent event) {
-
+        Friend miAmigo = new Friend();
+        miAmigo.setName("Pepe");
+        miAmigo.setSurname("Hernández");
+        friends.add(miAmigo);
     }
 
 }
