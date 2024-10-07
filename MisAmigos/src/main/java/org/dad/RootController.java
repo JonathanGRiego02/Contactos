@@ -85,6 +85,8 @@ public class RootController implements Initializable {
         selectedFriend.bind(friendsListView.getSelectionModel().selectedItemProperty());
         enemyButton.disableProperty().bind(selectedFriend.isNull());
         selectedFriend.addListener(this::onSelectFriendChange);
+
+        friendController.friendProperty().bind(selectedFriend);
     }
 
     private void onSelectFriendChange(ObservableValue<? extends Friend> o, Friend ov, Friend nv) {
@@ -106,6 +108,7 @@ public class RootController implements Initializable {
         miAmigo.setName("Pepe");
         miAmigo.setSurname("Hernández");
         friends.add(miAmigo);
+        friendsListView.getSelectionModel().select(miAmigo);
     }
 
 }

@@ -1,5 +1,8 @@
 package org.dad;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +18,27 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class FriendController implements Initializable {
+
+    // model
+
+    private ObjectProperty<Friend> friend = new SimpleObjectProperty<>();
+
+    public Friend getFriend() {
+        return friend.get();
+    }
+
+    public ObjectProperty<Friend> friendProperty() {
+        return friend;
+    }
+
+    public void setFriend(Friend friend) {
+        this.friend.set(friend);
+    }
+
+
+
+    // View
+
     @FXML
     private TextField apellidoTextField;
 
@@ -120,6 +144,26 @@ public class FriendController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        friend.addListener(this::onFriendChanged);
+    }
 
+    private void onFriendChanged(ObservableValue<? extends Friend>o, Friend oldValue, Friend newValue) {
+        if (oldValue != null ) {
+            nombreTextField.textProperty().unbindBidirectional(oldValue.nameProperty());
+            apellidoTextField.textProperty().unbindBidirectional(oldValue.surnameProperty());
+            cumpleDatePicker.valueProperty().unbindBidirectional(oldValue.birthdateProperty());
+            movilTextField.textProperty().unbindBidirectional(oldValue.phoneNumberProperty());
+            mailTextField.textProperty().unbindBidirectional(oldValue.emailProperty());
+            perfilImageView.imageProperty().unbindBidirectional(oldValue.photoProperty());
+        }
+
+        if (newValue != null) {
+            nombreTextField.textProperty().bindBidirectional(newValue.nameProperty());
+            apellidoTextField.textProperty().bindBidirectional(newValue.surnameProperty());
+            cumpleDatePicker.valueProperty().bindBidirectional(newValue.birthdateProperty());
+            movilTextField.textProperty().bindBidirectional(newValue.phoneNumberProperty());
+            mailTextField.textProperty().bindBidirectional(newValue.emailProperty());
+            perfilImageView.imageProperty().bindBidirectional(newValue.photoProperty());
+        }
     }
 }
