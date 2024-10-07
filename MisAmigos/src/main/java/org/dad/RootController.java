@@ -27,7 +27,9 @@ public class RootController implements Initializable {
 
     // Model
 
-    private final ListProperty<Friend> friends = new SimpleListProperty<>(FXCollections.observableArrayList());
+    private final ListProperty<Friend> friends = new SimpleListProperty<>(FXCollections.observableArrayList(
+            friend -> new Observable[] { friend.nameProperty(), friend.surnameProperty()
+            }));
     private final ObjectProperty<Friend> selectedFriend = new SimpleObjectProperty<>();
 
 

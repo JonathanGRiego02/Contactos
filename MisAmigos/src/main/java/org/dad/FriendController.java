@@ -10,9 +10,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -65,7 +68,15 @@ public class FriendController implements Initializable {
 
     @FXML
     void onfotoAction(ActionEvent event) {
-
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Selecciona tu foto de perfil");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Imagen","*.png", ".jpg", "jepg"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Todos los archivos", "*.*"));
+        File imageFile = fileChooser.showOpenDialog(getRoot().getScene().getWindow());
+        if (imageFile != null) {
+            Image photo = new Image(imageFile.toURI().toString());
+            friend.get().setPhoto(photo);
+        }
     }
 
     public TextField getApellidoTextField() {
