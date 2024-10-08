@@ -1,0 +1,36 @@
+[
+  {
+    "name": {
+      "name": "",
+      "value": "Pepe",
+      "valid": true,
+      "helper": {
+        "observable": {}
+      }
+    },
+    "surname": {
+      "name": "",
+      "value": "Hernández",
+      "valid": true,
+      "helper": {
+        "observable": {}
+      }
+    },
+    "birthdate": {},
+    "phoneNumber": {
+      "name": "",
+      "valid": true,
+      "helper": {
+        "observable": {}
+      }
+    },
+    "email": {
+      "name": "",
+      "valid": true,
+      "helper": {
+        "observable": {}
+      }
+    },
+    "photo": {}
+  }
+]

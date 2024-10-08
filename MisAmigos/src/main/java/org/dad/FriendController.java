@@ -1,5 +1,6 @@
 package org.dad;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
@@ -15,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 
+import javax.naming.Binding;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -38,7 +40,7 @@ public class FriendController implements Initializable {
         this.friend.set(friend);
     }
 
-
+    private static final Image NO_PHOTO = new Image("images/friend.png");
 
     // View
 
@@ -160,21 +162,29 @@ public class FriendController implements Initializable {
 
     private void onFriendChanged(ObservableValue<? extends Friend>o, Friend oldValue, Friend newValue) {
         if (oldValue != null ) {
+
             nombreTextField.textProperty().unbindBidirectional(oldValue.nameProperty());
             apellidoTextField.textProperty().unbindBidirectional(oldValue.surnameProperty());
             cumpleDatePicker.valueProperty().unbindBidirectional(oldValue.birthdateProperty());
             movilTextField.textProperty().unbindBidirectional(oldValue.phoneNumberProperty());
             mailTextField.textProperty().unbindBidirectional(oldValue.emailProperty());
-            perfilImageView.imageProperty().unbindBidirectional(oldValue.photoProperty());
+            perfilImageView.imageProperty().unbind();
+
         }
 
         if (newValue != null) {
+
             nombreTextField.textProperty().bindBidirectional(newValue.nameProperty());
             apellidoTextField.textProperty().bindBidirectional(newValue.surnameProperty());
             cumpleDatePicker.valueProperty().bindBidirectional(newValue.birthdateProperty());
             movilTextField.textProperty().bindBidirectional(newValue.phoneNumberProperty());
             mailTextField.textProperty().bindBidirectional(newValue.emailProperty());
-            perfilImageView.imageProperty().bindBidirectional(newValue.photoProperty());
+            perfilImageView.imageProperty().bind(
+                    Bindings.when(newValue.photoProperty().isNull())
+                            .then(NO_PHOTO)
+                            .otherwise(newValue.photoProperty())
+            );
+
         }
     }
 }

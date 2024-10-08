@@ -1,5 +1,6 @@
 package org.dad;
 
+import com.google.gson.annotations.JsonAdapter;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -16,6 +17,8 @@ public class Friend {
     private final StringProperty phoneNumber = new SimpleStringProperty();
     private final StringProperty email = new SimpleStringProperty();
     private final ObjectProperty<Image> photo = new SimpleObjectProperty<>();
+
+
 
     public String getName() {
         return name.get();

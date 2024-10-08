@@ -7,6 +7,7 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -111,6 +112,14 @@ public class RootController implements Initializable {
         miAmigo.setSurname("Hernández");
         friends.add(miAmigo);
         friendsListView.getSelectionModel().select(miAmigo);
+    }
+
+    public ObservableList<Friend> getFriends() {
+        return friends.get();
+    }
+
+    public ListProperty<Friend> friendsProperty() {
+        return friends;
     }
 
 }
