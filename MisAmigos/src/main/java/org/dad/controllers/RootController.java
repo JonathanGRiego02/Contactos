@@ -1,4 +1,4 @@
-package org.dad;
+package org.dad.controllers;
 
 import javafx.beans.Observable;
 import javafx.beans.property.ListProperty;
@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import org.dad.models.Friend;
 
 import java.io.IOException;
 import java.net.URL;

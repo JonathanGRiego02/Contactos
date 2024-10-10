@@ -1,4 +1,4 @@
-package org.dad;
+package org.dad.controllers;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
@@ -15,8 +15,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
+import org.dad.models.Friend;
 
-import javax.naming.Binding;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;

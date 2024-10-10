@@ -1,6 +1,5 @@
-package org.dad;
+package org.dad.models;
 
-import com.google.gson.annotations.JsonAdapter;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
